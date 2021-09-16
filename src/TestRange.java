@@ -1,7 +1,8 @@
-package edu.uwm.cs351;
+
 
 import java.util.Collection;
 
+import edu.uwm.cs351.RangeCollection;
 import junit.framework.TestCase;
 
 public class TestRange extends TestCase {
