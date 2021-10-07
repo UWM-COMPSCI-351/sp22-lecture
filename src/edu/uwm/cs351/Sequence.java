@@ -3,7 +3,7 @@
 
 package edu.uwm.cs351;
 
-
+import java.util.function.Function;
 
 /******************************************************************************
  * This class is a homework assignment;
@@ -16,7 +16,17 @@ package edu.uwm.cs351;
 public class Sequence<E> implements Cloneable
 {
 
+	private static final int INITIAL_CAPACITY = 10;
+	// dynamic array
+	// array + how much being used
+	private E[] data;
+	private int manyItems;
+	private int currentIndex;
 	
+	@SuppressWarnings("unchecked") // we know what we are doing
+	private E[] makeArray(int cap) {
+		return (E[])new Object[cap]; // lying!, array must be kept secret
+	}
 	private static boolean doReport = true; // used only by invariant checker
 	
 	/**
@@ -38,8 +48,10 @@ public class Sequence<E> implements Cloneable
 	 * @return whether invariant is currently true
 	 */
 	private boolean wellFormed() {
-		// TODO
-		
+		if (data == null) return report("data is null!");
+		if (manyItems > data.length) return report("can't fit " + manyItems + " in array of length " + data.length);
+		if (manyItems < 0) return report("manyItems can't be negative");
+		if (currentIndex < 0 || currentIndex > manyItems) return report("current index is bad:: " + currentIndex);
 		// If no problems found, then return true:
 		return true;
 	}
@@ -52,6 +64,7 @@ public class Sequence<E> implements Cloneable
 	 **/   
 	public Sequence( )
 	{
+		data = makeArray(INITIAL_CAPACITY);
 		// TODO: initialize data structure
 		assert wellFormed() : "invariant failed in constructor";
 	}
@@ -65,7 +78,7 @@ public class Sequence<E> implements Cloneable
 	public int size( )
 	{
 		assert wellFormed() : "invariant wrong at start of size()";
-		return -1; // TODO
+		return manyItems; // TODO
 		// This method shouldn't modify any fields, hence no assertion at end
 	}
 
@@ -154,7 +167,11 @@ public class Sequence<E> implements Cloneable
 	public void insert(E element)
 	{
 		assert wellFormed() : "invariant wrong at start of insert";
-		// TODO
+		for (int i=manyItems-1; i >= currentIndex; --i) {
+			data[i+1] = data[i];
+		}
+		data[currentIndex] = element;
+		++manyItems;
 		assert wellFormed() : "invariant wrong at end of insert";
 	}
 
@@ -244,9 +261,10 @@ public class Sequence<E> implements Cloneable
 	}
 
 	// TODO: doc comment
-	public void transform(Object pickABetterTypeAndName) {
+	public void transform(Function<E,E> transformer) {
 		// What else do we need here ?
 		report("transform not implemented yet"); // TODO
+		transformer.apply(null); // NO!
 		// WHat else do we need here ?
 	}
 }
