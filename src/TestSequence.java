@@ -518,7 +518,7 @@ public class TestSequence extends TestCase {
 	public void test51() {
 		s.insert(5);
 		s.transform((n) -> n + 10);
-		assertEquals(Ti(1410639789),s.getCurrent().intValue());
+		assertEquals(15,s.getCurrent().intValue());
 	}
 	
 	public void test52() {
@@ -537,8 +537,8 @@ public class TestSequence extends TestCase {
 		s.insert(4);
 		s.transform((n) -> n*2);
 		assertEquals(8,s.getCurrent().intValue());
-		s.advance();
-		assertEquals(Ti(205823392),s.getCurrent().intValue());
+		s.start();
+		assertEquals(6,s.getCurrent().intValue());
 		assertEquals(3,s.size());
 	}
 	
