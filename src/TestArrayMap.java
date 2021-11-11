@@ -46,7 +46,14 @@ public class TestArrayMap extends TestCase {
 	}
 	
 	public void test4() {
-		assertTrue(es.contains((Object)new DefaultEntry<>(3, "rat")));
+		Map.Entry<Integer,String> en1 = new DefaultEntry<>(3, "rat");
+		Map.Entry<Integer,String> en2 = new DefaultEntry<>(3,"rat");
+		assertEquals(en1, en2);
+		for (Map.Entry<Integer,String> e : es) {
+			System.out.println(e);
+			System.out.println(e.equals(en1));
+		}
+		assertTrue(es.contains((Object)new DefaultEntry<>(3, "snake")));
 		assertFalse(es.contains((Object)new DefaultEntry<>(3, "ferret")));
 	}
 }

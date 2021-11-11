@@ -2,6 +2,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.uwm.cs351.util.ArrayMap;
+import edu.uwm.cs351.util.DefaultEntry;
 import junit.framework.TestCase;
 
 public class TestEfficiencyAM extends TestCase {
@@ -18,6 +19,7 @@ public class TestEfficiencyAM extends TestCase {
 			array[i] = ""+i;
 		}
 		am = new ArrayMap<>(array);
+		es = am.entrySet();
 	}
 	
 	public void testGet() {
@@ -43,7 +45,8 @@ public class TestEfficiencyAM extends TestCase {
 	
 	public void testSetContains() {
 		for (int i=0; i < SIZE; ++i) {
-			
+			assertFalse(es.contains(new DefaultEntry<>(i,"six")));
+			assertTrue(es.contains(new DefaultEntry<>(i,""+i)));
 		}
 	}
 }
