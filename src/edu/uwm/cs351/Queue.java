@@ -1,8 +1,37 @@
 package edu.uwm.cs351;
 
+import java.util.NoSuchElementException;
+
 public class Queue<E> {
 
-	public void enqueue(E e) {};
+	private E[] data;
+	private int front, rear;
+	
+	@SuppressWarnings("unchecked")
+	private E[] makeArray(int cap) {
+		return (E[]) new Object[cap];  // lie!
+	}
+	
+	private void ensureCapacity(int cap) {
+		// TODO
+	}
+	
+	public Queue() {
+		data = makeArray(2);
+		front = rear = 0;
+	}
+	
+	public void enqueue(E e) {
+		System.out.println("Before enq, front = " + front + ", rear = " + rear);
+		ensureCapacity(size()+2);
+		data[rear] = e;
+		System.out.println("A enq, front = " + front + ", rear = " + rear);
+		++rear;
+		System.out.println("B enq, front = " + front + ", rear = " + rear);
+		if (rear >= data.length) rear = 0;
+		System.out.println("after enq, front = " + front + ", rear = " + rear);
+
+	};
 	
 	/**
 	 * Return the first element of the queue without removing it.
@@ -10,7 +39,9 @@ public class Queue<E> {
 	 * @throws NoSuchELementException if the queue is empty
 	 */
 	public E front() {
-		return null;
+		System.out.println("front = " + front + ", rear = " + rear);
+		if (isEmpty()) throw new NoSuchElementException("empty!");
+		return data[front];
 	}
 	
 	/**
@@ -18,8 +49,13 @@ public class Queue<E> {
 	 * @return element after removing from front of queue
 	 * @throws NoSuchELementException if the queue is empty
 	 */
-	public E dequeue() {
-		return null;
+	public E dequeue() 
+	{
+		if (isEmpty()) throw new NoSuchElementException("no more");
+		E p = data[front];
+		++front;
+		if (front >= data.length) front = 0;
+		return p;
 	};
 	
 	/**
@@ -27,7 +63,7 @@ public class Queue<E> {
 	 * @return wheher queue has no elements in it
 	 */
 	public boolean isEmpty() {
-		return false;
+		return rear == front;
 	}
 	
 	/**
@@ -35,6 +71,6 @@ public class Queue<E> {
 	 * @return number of elements in queue
 	 */
 	public int size() {
-		return -1;
+		return rear - front;
 	}
 }
