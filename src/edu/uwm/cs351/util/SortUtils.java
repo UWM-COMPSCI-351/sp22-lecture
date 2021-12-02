@@ -23,4 +23,8 @@ public class SortUtils<T> {
 			array[hole] = current;
 		}
 	}
+	
+	public void quickSort(T[] array) {
+		// TODO
+	}
 }
